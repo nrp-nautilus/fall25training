@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mig-gpu-pod
+spec:
+  containers:
+  - name: mig-container
+    image: nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
+    command: ["sleep", "3600"]  # Sleep for 1 hour instead of infinity
+    resources:
+      limits:
+        nvidia.com/mig-small: 1
+      requests:
+        nvidia.com/mig-small: 1
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: dshm
+  volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+      sizeLimit: 2Gi
+

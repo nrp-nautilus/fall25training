@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel-job
+spec:
+  parallelism: 3
+  completions: 6
+  template:
+    spec:
+      containers:
+      - name: parallel-container
+        image: ubuntu
+        command: ["sh", "-c", "echo 'Worker $HOSTNAME starting' && sleep 10 && echo 'Worker $HOSTNAME completed'"]
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 100m
+          requests:
+            memory: 100Mi
+            cpu: 100m
+      restartPolicy: Never
+  backoffLimit: 1

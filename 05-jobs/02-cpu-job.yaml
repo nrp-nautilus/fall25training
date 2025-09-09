@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cpu-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: cpu-container
+        image: ubuntu
+        command: ["sh", "-c", "echo 'Starting CPU job' && for i in {1..5}; do echo 'Iteration $i'; sleep 2; done && echo 'CPU job completed'"]
+        resources:
+          limits:
+            memory: 200Mi
+            cpu: 500m
+          requests:
+            memory: 200Mi
+            cpu: 500m
+      restartPolicy: Never
+  backoffLimit: 1

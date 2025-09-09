@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  ingressClassName: haproxy
+  rules:
+  - host: test-service.nrp-nautilus.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: test-svc
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - test-service.nrp-nautilus.io

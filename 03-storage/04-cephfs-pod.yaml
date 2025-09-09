@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cephfs-pod
+spec:
+  containers:
+  - name: cephfs-container
+    image: ubuntu
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: cephfs-volume
+      mountPath: /shared-data
+  volumes:
+  - name: cephfs-volume
+    persistentVolumeClaim:
+      claimName: cephfs-pvc

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rbd-pod
+spec:
+  containers:
+  - name: rbd-container
+    image: ubuntu
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: rbd-volume
+      mountPath: /data
+  volumes:
+  - name: rbd-volume
+    persistentVolumeClaim:
+      claimName: rbd-pvc

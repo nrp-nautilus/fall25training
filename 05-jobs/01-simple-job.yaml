@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: simple-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: simple-container
+        image: ubuntu
+        command: ["sh", "-c", "echo 'Hello from simple job' && date"]
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 100m
+          requests:
+            memory: 100Mi
+            cpu: 100m
+      restartPolicy: Never
+  backoffLimit: 1

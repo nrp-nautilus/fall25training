@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-http
+  labels:
+    k8s-app: test-http
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: test-http
+  template:
+    metadata:
+      labels:
+        k8s-app: test-http
+    spec:
+      initContainers:
+      - name: myinit
+        image: busybox
+        command: ["sh", "-c", "echo '<html><body><h1>I am ' `hostname` '</h1></body></html>' > /usr/local/apache2/htdocs/index.html"]
+        volumeMounts:
+        - name: dataroot
+          mountPath: /usr/local/apache2/htdocs
+      containers:
+      - name: mypod
+        image: httpd:alpine
+        resources:
+           limits:
+             memory: 200Mi
+             cpu: 1
+           requests:
+             memory: 50Mi
+             cpu: 50m
+        volumeMounts:
+        - name: dataroot
+          mountPath: /usr/local/apache2/htdocs
+      volumes:
+      - name: dataroot
+        emptyDir: {}
