@@ -3,7 +3,8 @@
 **Target Audience:** All users (Beginner, Accustomed, NS Admin/PI, Instructor)  
 **Date:** Tuesday, September 9, 2025  
 **Time:** 10:00 AM PDT / 1:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/92728984788)
+**Status:** ✅ Complete  
+**Recording:** Available (see [NRP Training Schedule](https://nrp.ai/training/))
 
 ## Overview
 Launch and use interactive development environments. Ideal for researchers, students, and educators.

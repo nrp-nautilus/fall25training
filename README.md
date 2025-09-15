@@ -31,9 +31,15 @@ The training runs from **September 2nd to September 30th, 2025** with sessions o
 
 ## Getting Started
 
-1. Check the [NRP Training Schedule](https://nrp.ai/training/) for session times and Zoom links
+1. Check the [NRP Training Schedule](https://nrp.ai/training/) for session times and live Zoom links
 2. Navigate to the specific session directory for materials
 3. Each session has its own README with detailed information
+4. Recordings will be posted after each session
+
+## Recordings
+
+- **Sessions 1-4**: Recordings available (see individual session pages)
+- **Sessions 5-9**: Recordings coming soon
 
 ## Support
 

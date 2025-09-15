@@ -3,7 +3,8 @@
 **Target Audience:** All users (Beginner, Accustomed, NS Admin/PI, Instructor)  
 **Date:** Tuesday, September 16, 2025  
 **Time:** 11:00 AM PDT / 2:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/96377381436)
+**Status:** 🚧 Coming Soon  
+**Recording:** Coming soon
 
 ## Overview
 Explore how to integrate NRP-managed LMs and AI agents into JupyterHub, Coder and your own namespace.

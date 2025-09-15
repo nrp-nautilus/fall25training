@@ -3,7 +3,8 @@
 **Target Audience:** All users (Beginner, Accustomed, NS Admin/PI, Instructor)  
 **Date:** Tuesday, September 9, 2025  
 **Time:** 11:00 AM PDT / 2:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/94308786130)
+**Status:** ✅ Complete  
+**Recording:** Available (see [NRP Training Schedule](https://nrp.ai/training/))
 
 ## Overview
 Foundations of containers and orchestration: Pods, Deployments, PVCs, and S3 storage.

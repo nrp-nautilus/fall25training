@@ -3,7 +3,8 @@
 **Target Audience:** All users (Beginner, Accustomed, NS Admin/PI, Instructor)  
 **Date:** Tuesday, September 2, 2025  
 **Time:** 11:00 AM PDT / 2:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/91558273595)
+**Status:** ✅ Complete  
+**Recording:** Available (see [NRP Training Schedule](https://nrp.ai/training/))
 
 ## Overview
 Navigate the NRP portal, manage namespaces/groups, and explore the integrated LiteLLM interface.

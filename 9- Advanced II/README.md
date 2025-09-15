@@ -3,7 +3,8 @@
 **Target Audience:** Accustomed Users, NS Admin/PI (Not for Beginners or Instructors)  
 **Date:** Tuesday, September 30, 2025  
 **Time:** 11:00 AM PDT / 2:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/92476867994)
+**Status:** 🚧 Coming Soon  
+**Recording:** Coming soon
 
 ## Overview
 Launch and connect to VMs (Linux/Windows), configure networking, and explore advanced edge scenarios.

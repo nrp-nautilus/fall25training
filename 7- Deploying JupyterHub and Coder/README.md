@@ -3,7 +3,8 @@
 **Target Audience:** NS Admin/PI, Instructors (Not for Beginner or Accustomed Users)  
 **Date:** Tuesday, September 23, 2025  
 **Time:** 10:00 AM PDT / 1:00 PM EDT  
-**Zoom Link:** [Join Session](https://ucsd.zoom.us/j/95336469365)
+**Status:** 🚧 Coming Soon  
+**Recording:** Coming soon
 
 ## Overview
 Learn how to deploy and manage JupyterHub and Coder environments for groups or courses.
