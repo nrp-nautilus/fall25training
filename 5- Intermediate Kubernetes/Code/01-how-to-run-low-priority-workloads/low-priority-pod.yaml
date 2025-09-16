@@ -1,0 +1,23 @@
+# Low priority pod example
+# This pod uses the existing 'nice' priority class (-10) to run with lower priority
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: low-priority-pod
+  labels:
+    app: low-priority-test
+spec:
+  priorityClassName: nice
+  containers:
+  - name: test-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "171Mi"

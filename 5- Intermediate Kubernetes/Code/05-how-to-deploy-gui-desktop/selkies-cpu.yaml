@@ -1,0 +1,22 @@
+# Selkies GUI Desktop with CPU only
+# This creates a desktop environment that can be accessed via web browser
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: selkies-desktop-cpu
+  labels:
+    app: selkies-desktop
+spec:
+  containers:
+  - name: desktop
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"

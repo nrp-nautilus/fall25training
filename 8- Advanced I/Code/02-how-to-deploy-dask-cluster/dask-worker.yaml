@@ -1,0 +1,22 @@
+# Dask worker pod
+# This worker connects to the scheduler
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dask-worker
+  labels:
+    app: dask
+    component: worker
+spec:
+  containers:
+  - name: dask-worker
+    image: daskdev/dask:latest
+    command: ["dask-worker", "dask-scheduler:8786"]
+    resources:
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"

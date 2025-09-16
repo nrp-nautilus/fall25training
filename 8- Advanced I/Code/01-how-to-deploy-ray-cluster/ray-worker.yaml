@@ -1,0 +1,22 @@
+# Ray cluster worker node
+# This worker node connects to the head node
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ray-worker
+  labels:
+    app: ray
+    component: worker
+spec:
+  containers:
+  - name: ray-worker
+    image: rayproject/ray:latest
+    command: ["ray", "start", "--address=ray-head:6379"]
+    resources:
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"

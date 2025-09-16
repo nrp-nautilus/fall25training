@@ -1,0 +1,26 @@
+# Service for Ray cluster
+# This service exposes the Ray dashboard and head node
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ray-service
+  labels:
+    app: ray
+spec:
+  ports:
+  - port: 10001
+    targetPort: 10001
+    protocol: TCP
+    name: ray-client
+  - port: 8265
+    targetPort: 8265
+    protocol: TCP
+    name: ray-dashboard
+  - port: 6379
+    targetPort: 6379
+    protocol: TCP
+    name: ray-gcs
+  selector:
+    component: head
+  type: ClusterIP

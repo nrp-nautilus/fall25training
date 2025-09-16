@@ -1,0 +1,27 @@
+# Low priority job example
+# This job uses the existing 'opportunistic' priority class (-2000000000) to run with very low priority
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: low-priority-job
+  labels:
+    app: low-priority-job
+spec:
+  template:
+    spec:
+      priorityClassName: opportunistic
+      containers:
+      - name: test-container
+        image: nginx:latest
+        command: ["/bin/sh"]
+        args: ["-c", "echo 'Low priority job completed' && sleep 30"]
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "171Mi"
+      restartPolicy: Never
+  backoffLimit: 3

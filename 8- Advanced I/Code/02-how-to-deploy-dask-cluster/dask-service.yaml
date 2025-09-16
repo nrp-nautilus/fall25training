@@ -1,0 +1,22 @@
+# Service for Dask cluster
+# This service exposes the Dask scheduler and dashboard
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dask-service
+  labels:
+    app: dask
+spec:
+  ports:
+  - port: 8786
+    targetPort: 8786
+    protocol: TCP
+    name: dask-scheduler
+  - port: 8787
+    targetPort: 8787
+    protocol: TCP
+    name: dask-dashboard
+  selector:
+    component: scheduler
+  type: ClusterIP

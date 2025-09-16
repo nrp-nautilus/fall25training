@@ -1,0 +1,26 @@
+# Ray cluster head node
+# This is the main node that coordinates the Ray cluster
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ray-head
+  labels:
+    app: ray
+    component: head
+spec:
+  containers:
+  - name: ray-head
+    image: rayproject/ray:latest
+    ports:
+    - containerPort: 10001
+    - containerPort: 8265
+    - containerPort: 6379
+    command: ["ray", "start", "--head", "--port=6379", "--dashboard-host=0.0.0.0", "--dashboard-port=8265"]
+    resources:
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"

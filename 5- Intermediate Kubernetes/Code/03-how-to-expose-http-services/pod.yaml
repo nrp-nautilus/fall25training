@@ -1,0 +1,15 @@
+# Simple HTTP pod for testing ingress
+# This pod runs a basic HTTP server that we can expose via ingress
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-http-pod
+  labels:
+    k8s-app: test-http
+spec:
+  containers:
+  - name: http-server
+    image: nginxdemos/hello:plain-text
+    ports:
+    - containerPort: 80

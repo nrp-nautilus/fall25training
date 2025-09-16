@@ -1,0 +1,17 @@
+# Service to expose the HTTP pod
+# This service makes the pod accessible within the cluster
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: test-svc
+  name: test-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    k8s-app: test-http
+  type: ClusterIP
