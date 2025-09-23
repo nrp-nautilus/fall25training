@@ -1,0 +1,184 @@
+hub:
+  config:
+    JupyterHub:
+      authenticator_class: dummy
+      admin_access: true
+      admin_users: ["admin"]
+    DummyAuthenticator:
+      password: "training123"
+    # Allow all users to sign in (for tutorial purposes)
+    Authenticator:
+      allowed_users: set()
+    # Spawner configuration for GUI options
+    KubeSpawner:
+      cpu_limit: 4
+      cpu_guarantee: 1
+      mem_limit: "8G"
+      mem_guarantee: "2G"
+      # Allow users to select CPU and memory
+      extra_resource_limits:
+        nvidia.com/gpu: 0
+      extra_resource_guarantees:
+        nvidia.com/gpu: 0
+      # Node selection options
+      node_selector: {}
+      tolerations: []
+      affinity: {}
+  service:
+    type: ClusterIP
+    annotations: {}
+  deploymentStrategy:
+    type: Recreate
+  db:
+    type: sqlite-pvc
+    pvc:
+      accessModes:
+        - ReadWriteOnce
+      storage: 1Gi
+      storageClassName: rook-ceph-block
+  resources:
+    limits:
+      cpu: "2"
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  networkPolicy:
+    enabled: false
+
+proxy:
+  secretToken: "REPLACE_WITH_GENERATED_TOKEN"
+  service:
+    type: ClusterIP
+  chp:
+    resources:
+      limits:
+        cpu: "6"
+        memory: 10Gi
+      requests:
+        cpu: "1"
+        memory: 512Mi
+
+singleuser:
+  uid: 0
+  fsGid: 100
+  extraEnv:
+    GRANT_SUDO: "yes"
+  extraPodConfig:
+    securityContext:
+        fsGroupChangePolicy: "OnRootMismatch"
+        fsGroup: 100
+  cloudMetadata:
+    blockWithIptables: false
+  networkPolicy:
+    enabled: false
+  storage:
+    type: dynamic
+    extraLabels: {}
+    extraVolumes: []
+    extraVolumeMounts: []
+    capacity: 5Gi
+    homeMountPath: /home/jovyan
+    dynamic:
+      storageClass: rook-ceph-block
+      pvcNameTemplate: claim-{username}{servername}
+      volumeNameTemplate: volume-{username}{servername}
+      storageAccessModes: [ReadWriteOnce]
+  image:
+    name: quay.io/jupyter/scipy-notebook
+    tag: 2024-04-22
+  startTimeout: 600
+  cmd: null
+  defaultUrl: "/lab"
+  profileList:
+  - display_name: "Small (1 CPU, 2GB RAM)"
+    description: "Small instance for basic work"
+    kubespawner_override:
+      image_spec: quay.io/jupyter/scipy-notebook:2024-04-22
+      cpu_limit: 1
+      cpu_guarantee: 0.5
+      mem_limit: "2G"
+      mem_guarantee: "1G"
+      node_selector:
+        topology.kubernetes.io/region: us-west
+    default: True
+  - display_name: "Medium (2 CPU, 4GB RAM)"
+    description: "Medium instance for moderate workloads"
+    kubespawner_override:
+      image_spec: quay.io/jupyter/scipy-notebook:2024-04-22
+      cpu_limit: 2
+      cpu_guarantee: 1
+      mem_limit: "4G"
+      mem_guarantee: "2G"
+      node_selector:
+        topology.kubernetes.io/region: us-west
+  - display_name: "Large (4 CPU, 8GB RAM)"
+    description: "Large instance for intensive workloads"
+    kubespawner_override:
+      image_spec: quay.io/jupyter/scipy-notebook:2024-04-22
+      cpu_limit: 4
+      cpu_guarantee: 2
+      mem_limit: "8G"
+      mem_guarantee: "4G"
+      node_selector:
+        topology.kubernetes.io/region: us-west
+  - display_name: "GPU Small (1 CPU, 4GB RAM, 1 GPU)"
+    description: "Small GPU instance"
+    kubespawner_override:
+      image_spec: quay.io/jupyter/tensorflow-notebook:cuda-2024-04-22
+      cpu_limit: 1
+      cpu_guarantee: 0.5
+      mem_limit: "4G"
+      mem_guarantee: "2G"
+      extra_resource_limits:
+        nvidia.com/gpu: "1"
+      extra_resource_guarantees:
+        nvidia.com/gpu: "1"
+      node_selector:
+        topology.kubernetes.io/region: us-west
+  - display_name: "GPU Large (4 CPU, 16GB RAM, 2 GPU)"
+    description: "Large GPU instance"
+    kubespawner_override:
+      image_spec: quay.io/jupyter/pytorch-notebook:cuda12-2024-04-22
+      cpu_limit: 4
+      cpu_guarantee: 2
+      mem_limit: "16G"
+      mem_guarantee: "8G"
+      extra_resource_limits:
+        nvidia.com/gpu: "2"
+      extra_resource_guarantees:
+        nvidia.com/gpu: "2"
+      node_selector:
+        topology.kubernetes.io/region: us-west
+
+scheduling:
+  userScheduler:
+    enabled: false
+  userPlaceholder:
+    enabled: false
+
+# prePuller relates to the hook|continuous-image-puller DaemonsSets
+prePuller:
+  hook:
+    enabled: false
+  continuous:
+    enabled: false
+
+ingress:
+  enabled: true
+  ingressClassName: haproxy
+  hosts: ["training-test.nrp-nautilus.io"]
+  pathSuffix: ''
+  tls:
+    - hosts:
+      - training-test.nrp-nautilus.io
+
+# Required culling configuration (mandatory for NRP cluster policies)
+cull:
+  enabled: true
+  users: false
+  removeNamedServers: false
+  timeout: 3600      # 1 hour in seconds - Must be ≤ 21600 (6 hours)
+  every: 600         # Check every 10 minutes
+  concurrency: 10    # Number of parallel culling operations
+  maxAge: 0          # No maximum age limit
