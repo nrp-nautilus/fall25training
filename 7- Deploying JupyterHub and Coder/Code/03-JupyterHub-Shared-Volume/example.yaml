@@ -1,0 +1,71 @@
+hub:
+  extraConfig:
+    spawner_ui.py: |
+      from kubespawner import KubeSpawner
+
+      class SimpleSpawner(KubeSpawner):
+        profile_form_template = """
+          <p>Your /home/jovyan directory is persistent (default 5GB). Don't fill it up, or Jupyter may fail to start.</p>
+          
+          <label for="region">Region</label>
+          <select name="region">
+            <option value="">Any</option>
+            <option value="us-west">West</option>
+            <option value="us-mountain">Mountain</option>
+            <option value="us-central">Central</option>
+            <option value="us-east">East</option>
+          </select>
+          <br/>
+
+          <label for="gpus">GPUs</label>
+          <input type="number" name="gpus" value="0" min="0" max="8"/>
+          <br/>
+
+          <label for="cores">Cores</label>
+          <input type="number" name="cores" value="1" min="1" max="96"/>
+          <br/>
+
+          <label for="ram">RAM (GB)</label>
+          <input type="number" name="ram" value="8" min="1" max="512"/>
+          <br/>
+
+          <label for="gputype">GPU type</label>
+          <select name="gputype">
+            <option value="">Any</option>
+            <option value="NVIDIA-A10">NVIDIA A10</option>
+            <option value="NVIDIA-A100">NVIDIA A100</option>
+            <option value="NVIDIA-L40">NVIDIA L40</option>
+            <option value="NVIDIA-RTX-A6000">NVIDIA RTX A6000</option>
+            <option value="Tesla-V100-SXM2-32GB">NVIDIA V100 32GB</option>
+          </select>
+          <br/>
+
+          <label for="image">Image</label>
+          {%- for profile in profile_list %}
+            <label>
+              <input type="radio" name="profile" value="{{ profile.slug }}" {% if profile.default %}checked{% endif %}/>
+              {{ profile.display_name }}
+            </label><br/>
+          {%- endfor %}
+
+          <label for="arch">Architecture</label>
+          <select name="arch">
+            <option value="amd64" selected>amd64</option>
+            <option value="arm64">arm64</option>
+          </select>
+        """
+
+        profile_list = [
+          {'display_name': 'Scipy', 'slug': 'scipy', 'kubespawner_override': {'image': 'quay.io/jupyter/scipy-notebook:2025-01-28'}},
+          {'display_name': 'R', 'slug': 'r', 'kubespawner_override': {'image': 'quay.io/jupyter/r-notebook:2025-01-28'}},
+          {'display_name': 'Tensorflow', 'slug': 'tf', 'image_choice': {
+              'cuda': 'quay.io/jupyter/tensorflow-notebook:cuda-2025-01-28',
+              'cpu': 'quay.io/jupyter/tensorflow-notebook:2025-01-28'}},
+          {'display_name': 'Pytorch', 'slug': 'pytorch', 'image_choice': {
+              'cuda': 'quay.io/jupyter/pytorch-notebook:cuda12-2025-01-28',
+              'cpu': 'quay.io/jupyter/pytorch-notebook:2025-01-28'}},
+          {'display_name': 'Datascience (scipy, Julia, R)', 'slug': 'ds', 'default': True,
+              'kubespawner_override': {'image': 'quay.io/jupyter/datascience-notebook:2025-01-28'}}
+        ]
+
+      c.JupyterHub.spawner_class = SimpleSpawner
